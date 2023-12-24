@@ -1,0 +1,25 @@
+*{padding: 0; margin: auto;}
+
+.body_start {
+    display: flex;
+    flex-direction: row;
+}
+
+#searchPanel {
+    width: 15%;
+    float: left;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f0f0f0;
+    /* Optional: Add background color to the search panel */
+}
+
+#mainContent {
+    width: 70%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+}

@@ -1,0 +1,28 @@
+{% extends 'layout/base.html' %}
+{% block title %}
+  Filter
+{% endblock %}
+{% block body %}
+  <div id="searchPanel">
+    <form method="post" action="">
+      {% csrf_token %}
+
+      {% for category in allFilter %}
+        <h2>{{ category.category_name }}</h2>
+
+        {% for option in category.options.all %}
+          <label>
+            <input type="checkbox" name="options" value="{{ option.option_name }}" />
+            {{ option.option_name }}
+          </label><br />
+        {% endfor %}
+      {% endfor %}
+
+      <input type="submit" value="Apply Filters" />
+    </form>
+  </div>
+
+  <div id="mainContent">
+    <h2>Welcome to landing page</h2>
+  </div>
+{% endblock %}
