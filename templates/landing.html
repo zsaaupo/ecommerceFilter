@@ -7,17 +7,47 @@
     <form method="post" action="">
       {% csrf_token %}
 
-      {% for category in allFilter %}
-        <h2>{{ category.category_name }}</h2>
-
-        {% for option in category.options.all %}
-          <label>
-            <input type="checkbox" name="options" value="{{ option.option_name }}" />
-            {{ option.option_name }}
-          </label><br />
-        {% endfor %}
+      <h2>Categories</h2>
+      {% for category in Categories %}
+        <label>
+          <input type="checkbox" name="options" value="{{ category.category_name }}" />
+          {{ category.category_name }}
+        </label><br />
       {% endfor %}
 
+      <h2>Brands</h2>
+      {% for brand in Brands %}
+        <label>
+          <input type="checkbox" name="options" value="{{ brand.brand_name }}" />
+          {{ brand.brand_name }}
+        </label><br />
+      {% endfor %}
+
+      <h2>Sellers</h2>
+      {% for seller in Sellers %}
+        <label>
+          <input type="checkbox" name="options" value="{{ seller.seller_name }}" />
+          {{ seller.seller_name }}
+        </label><br />
+      {% endfor %}
+
+      <h2>Warrantys</h2>
+      {% for warranty in Warrantys %}
+        <label>
+          <input type="checkbox" name="options" value="{{ warranty.warranty_name }}" />
+          {{ warranty.warranty_name }}
+        </label><br />
+      {% endfor %}
+
+      <h2>ProductTypes</h2>
+      {% for productType in ProductTypes %}
+        <label>
+          <input type="checkbox" name="options" value="{{ productType.product_type_name }}" />
+          {{ productType.product_type_name }}
+        </label><br />
+      {% endfor %}
+
+      <br/>
       <input type="submit" value="Apply Filters" />
     </form>
   </div>
