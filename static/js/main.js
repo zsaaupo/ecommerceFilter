@@ -11,6 +11,7 @@ $(document).ready(function () {
   });
 });
 
+
 $('#filer').click(function (event) {
   event.preventDefault();
 
@@ -70,6 +71,7 @@ $('#search_field').click(function () {
   });
 })
 
+
 function renderProducts(products) {
   $('.row').html('');
 
@@ -87,6 +89,7 @@ function renderProducts(products) {
       `);
   }
 }
+
 
 $('#resetFilters').click(function (event) {
   event.preventDefault();
