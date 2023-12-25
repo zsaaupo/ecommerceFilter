@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Product
 from Category.models import Categories, Brand, Seller, Warranty, ProductType
 from .serializers import ProductSerializer
+from django.db.models import Q
 
 from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.response import Response
@@ -18,7 +19,6 @@ class ProductList(ListAPIView):
         
         return Response(product_list)
     
-    
 class FilterProduct(CreateAPIView):
     
     permission_classes = []
@@ -34,6 +34,7 @@ class FilterProduct(CreateAPIView):
             sellers = data.get("seller", [])
             warranties = data.get("warranty", [])
             product_types = data.get("productType", [])
+            sortByprice = data.get("price", [])
             
             filtered_product = {}
 
@@ -52,9 +53,42 @@ class FilterProduct(CreateAPIView):
             else:
                 products = Product.objects.filter(**filtered_product)
                 
+            if sortByprice == [1]:
+                products = products.order_by("-price")
+            else:
+                products = products.order_by("price")
+  
             serializer = ProductSerializer(products, many=True).data
             
             return Response(serializer)
+        except Exception as ex:
+            result = {}
+            result['message'] = str(ex)
+            return Response(result)
+        
+
+class SearchApi(CreateAPIView):
+    permission_classes = []
+
+    def post(self, request):
+        try:
+            
+            data = json.loads(request.body)
+            searchValue = data['searchValue']
+            products = Product.objects.all()
+
+            if searchValue:
+                products = products.filter(
+                    Q(name__icontains=searchValue) |
+                    Q(category__category_name__icontains=searchValue) |
+                    Q(brand__brand_name__icontains=searchValue) |
+                    Q(seller__seller_name__icontains=searchValue) |
+                    Q(product_type__product_type_name__icontains=searchValue)
+                )
+
+            products = ProductSerializer(products, many=True).data
+            return Response(products)
+        
         except Exception as ex:
             result = {}
             result['message'] = str(ex)

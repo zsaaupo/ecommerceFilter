@@ -19,14 +19,17 @@ $('#filer').click(function (event) {
     "brand": [],
     "seller": [],
     "warranty": [],
-    "productType": []
+    "productType": [],
+    "price": []
   };
 
   $('input[name="options"]:checked').each(function () {
     var category = $(this).attr('id');
     selectedValues[category].push(parseInt($(this).val()));
   });
-  console.log('Selected Values:', selectedValues);
+
+  selectedValues["price"].push(parseInt($("#price").val()))
+  console.log(selectedValues)
 
   $.ajax({
     type: "POST",
@@ -35,11 +38,34 @@ $('#filer').click(function (event) {
     dataType: "json",
     data: JSON.stringify(selectedValues),
     success: function (data) {
-      console.log(data);
       renderProducts(data);
     },
     error: function (error) {
       console.log(error);
+    }
+  });
+})
+
+
+$('#search_field').click(function () {
+
+  $('input[name="options"]:checked').prop('checked', false);
+  $('#price').val('0');
+
+  $('.row').html('');
+  let data_search = {}
+  data_search["searchValue"] = $('#searchValue').val()
+  let url = "/products/search/"
+  console.log(data_search)
+  $.ajax({
+    type: "POST",
+    url: url,
+    data: JSON.stringify(data_search),
+    success: function (data) {
+      renderProducts(data);
+    },
+    error: function (errormsg) {
+      console.log(errormsg)
     }
   });
 })
@@ -61,3 +87,11 @@ function renderProducts(products) {
       `);
   }
 }
+
+$('#resetFilters').click(function (event) {
+  event.preventDefault();
+
+  $('input[name="options"]:checked').prop('checked', false);
+  $('#price').val('0');
+  $('#filer').trigger('click');
+});

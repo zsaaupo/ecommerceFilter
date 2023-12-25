@@ -3,6 +3,7 @@
   Filter
 {% endblock %}
 {% block body %}
+
   <div id="searchPanel">
 
       {% csrf_token %}
@@ -11,7 +12,6 @@
         <label>
           <input id="category" type="checkbox" name="options" value="{{ category.id }}" />
           {{ category.category_name }}
-          {{ category.id }}
         </label><br />
       {% endfor %}
 
@@ -20,7 +20,6 @@
         <label>
           <input id="brand" type="checkbox" name="options" value="{{ brand.id }}" />
           {{ brand.brand_name }}
-          {{ brand.id }}
         </label><br />
       {% endfor %}
 
@@ -29,7 +28,6 @@
         <label>
           <input id="seller" type="checkbox" name="options" value="{{ seller.id }}" />
           {{ seller.seller_name }}
-          {{ seller.id }}
         </label><br />
       {% endfor %}
 
@@ -38,7 +36,6 @@
         <label>
           <input id="warranty" type="checkbox" name="options" value="{{ warranty.id }}" />
           {{ warranty.warranty_name }}
-          {{ warranty.id }}
         </label><br />
       {% endfor %}
 
@@ -47,12 +44,17 @@
         <label>
           <input id="productType" type="checkbox" name="options" value="{{ productType.id }}" />
           {{ productType.product_type_name }}
-          {{ productType.id }}
         </label><br />
       {% endfor %}
+      <label for="sort"><h5>Sort by Price:</h5></label>
+      <select id="price" name="sort">
+        <option value="0">Low to High</option>
+        <option value="1">High to Low</option>
+      </select>
 
       <br />
       <input type="submit" id="filer" value="Apply Filters" />
+      <button id="resetFilters">Reset</button>
   </div>
 
   <div id="mainContent">
