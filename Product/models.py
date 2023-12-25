@@ -1,20 +1,26 @@
 from django.db import models
-from filter.models import Category, Option
+from Category.models import Categories, Brand, Seller, Warranty, ProductType
 
 
 class Product(models.Model):
     
     name = models.CharField(max_length=255)
     price = models.FloatField()
-    categories = models.ManyToManyField(Category, related_name="products")
-    # selected_option = models.ForeignKey(Option, null=True, blank=True, on_delete=models.SET_NULL, related_name="selected_products")
+    category = models.ForeignKey(Categories, on_delete=models.PROTECT, related_name="products", null=True, blank=True)
+    brand = models.ForeignKey(Brand, on_delete=models.PROTECT, related_name="products", null=True, blank=True)
+    seller = models.ForeignKey(Seller, on_delete=models.PROTECT, related_name="products", null=True, blank=True)
+    warranty = models.ForeignKey(Warranty, on_delete=models.PROTECT, related_name="products", null=True, blank=True)
+    product_type = models.ForeignKey(ProductType, on_delete=models.PROTECT, related_name="products", null=True, blank=True)
+    image = models.ImageField(null=True, blank=True)
     
     @property
-    def available_bands(self):
-        # Fetch options based on the categories associated with the product
-        category_names = self.categories.values_list('category_name', flat=True)
-        available_options = Option.objects.filter(categories__category_name__in=category_names).distinct()
-        return available_options
+    def imageURL(self):
+        
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
     
-    def __str__(self) -> str:
+    def __str__(self):
         return self.name
