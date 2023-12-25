@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'filter',
     'Product',
     'Category',
-    'djangorestframework',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
