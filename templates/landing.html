@@ -4,13 +4,12 @@
 {% endblock %}
 {% block body %}
   <div id="searchPanel">
-    <form method="post" action="">
-      {% csrf_token %}
 
+      {% csrf_token %}
       <h2>Categories</h2>
       {% for category in Categories %}
         <label>
-          <input type="checkbox" name="options" value="{{ category.id }}" />
+          <input id="category" type="checkbox" name="options" value="{{ category.id }}" />
           {{ category.category_name }}
           {{ category.id }}
         </label><br />
@@ -19,7 +18,7 @@
       <h2>Brands</h2>
       {% for brand in Brands %}
         <label>
-          <input type="checkbox" name="options" value="{{ brand.id }}" />
+          <input id="brand" type="checkbox" name="options" value="{{ brand.id }}" />
           {{ brand.brand_name }}
           {{ brand.id }}
         </label><br />
@@ -28,7 +27,7 @@
       <h2>Sellers</h2>
       {% for seller in Sellers %}
         <label>
-          <input type="checkbox" name="options" value="{{ seller.id }}" />
+          <input id="seller" type="checkbox" name="options" value="{{ seller.id }}" />
           {{ seller.seller_name }}
           {{ seller.id }}
         </label><br />
@@ -37,7 +36,7 @@
       <h2>Warrantys</h2>
       {% for warranty in Warrantys %}
         <label>
-          <input type="checkbox" name="options" value="{{ warranty.id }}" />
+          <input id="warranty" type="checkbox" name="options" value="{{ warranty.id }}" />
           {{ warranty.warranty_name }}
           {{ warranty.id }}
         </label><br />
@@ -46,7 +45,7 @@
       <h2>ProductTypes</h2>
       {% for productType in ProductTypes %}
         <label>
-          <input type="checkbox" name="options" value="{{ productType.id }}" />
+          <input id="productType" type="checkbox" name="options" value="{{ productType.id }}" />
           {{ productType.product_type_name }}
           {{ productType.id }}
         </label><br />
@@ -54,7 +53,6 @@
 
       <br />
       <input type="submit" id="filer" value="Apply Filters" />
-    </form>
   </div>
 
   <div id="mainContent">
